@@ -27,7 +27,7 @@ def classify(file_path):
         face = _extract_face(image, bbox, face_scale_thres=(30, 30))
         # face = face.copy()
         faces.append(face)
-        # try: lúc đầu try ở đây
+        # try: 
         face_rz = cv2.resize(face, (224, 224))
         # add 3 dim to feed to anther model
         another_face_3d = np.repeat(np.expand_dims(face_rz, axis=2), 3, axis=2)
@@ -84,7 +84,7 @@ def another_base_network():
 def show_classify_button(file_path):
     classify_b = Button(top, text="Classify Image",
                         command=lambda: classify(file_path), padx=10, pady=5)
-    classify_b.configure(background='#364156',
+    classify_b.configure(background='#0F9D58',
                          foreground='white', font=('arial', 10, 'bold'))
     classify_b.place(relx=0.79, rely=0.46)
 
@@ -106,34 +106,10 @@ def upload_image():
         pass
 
 
-# load the trained model to classify sign
-# from tensorflow.keras.Model import load_weights
 
 model = another_base_network()
 model = load_model('./checkpoint/another_face_reco_YALE.h5',
                    custom_objects={'CustomModel': another_base_network}, compile=False)
-# model.load_weights('./checkpoint/another_face_reco_YALE.h5')
-# use GPU
-# physical_devices = tf.config.experimental.list_physical_devices("GPU")
-# tf.config.experimental.set_memory_growth(physical_devices[0], True)
-
-# dictionary to label all traffic signs class.
-# classes = {1: 'Subject01',
-#            2: 'Subject02',
-#            3: 'Subject03',
-#            4: 'Subject04',
-#            5: 'Subject05',
-#            6: 'Subject06',
-#            7: 'Subject07',
-#            8: 'Subject08',
-#            9: 'Subject09',
-#            10: 'Subject10',
-#            11: 'Subject11',
-#            12: 'Subject12',
-#            13: 'Subject13',
-#            14: 'Subject14',
-#            15: 'Subject15',
-#            }
 
 # initialise GUI
 top = tk.Tk()
@@ -144,15 +120,15 @@ top.configure(background='#CDCDCD')
 label = Label(top, background='#CDCDCD', font=('arial', 15, 'bold'))
 sign_image = Label(top)
 
-upload = Button(top, text="Upload an image",
+upload = Button(top, text="+ Upload an image",
                 command=upload_image, padx=10, pady=5)
-upload.configure(background='#364156', foreground='white',
+upload.configure(background='#4285F4', foreground='white',
                  font=('arial', 10, 'bold'))
 
 upload.pack(side=BOTTOM, pady=50)
 sign_image.pack(side=BOTTOM, expand=True)
 label.pack(side=BOTTOM, expand=True)
-heading = Label(top, text="Your face image",
+heading = Label(top, text="YOUR FACE IMAGE",
                 pady=20, font=('arial', 20, 'bold'))
 heading.configure(background='#CDCDCD', foreground='#364156')
 heading.pack()
