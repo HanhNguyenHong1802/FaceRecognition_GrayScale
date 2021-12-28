@@ -89,6 +89,7 @@ def show_classify_button(file_path):
     classify_b.place(relx=0.79, rely=0.46)
 
 
+
 # upload image from computer
 def upload_image():
     try:
@@ -105,7 +106,19 @@ def upload_image():
     except:
         pass
 
+def capture_image():
+  vid = cv2.VideoCapture(0)
+  while True:
+    check , frame = vid.read()
+    cv2.imshow("Press c to Pass frame , q to exit",frame)
 
+    key = cv2.waitKey(1)
+    if key == ord('q'):
+        break
+    if key == ord('c'):
+        cv2.imwrite('./test/image.jpg', frame)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
 model = another_base_network()
 model = load_model('./checkpoint/another_face_reco_YALE.h5',
@@ -132,4 +145,8 @@ heading = Label(top, text="YOUR FACE IMAGE",
                 pady=20, font=('arial', 20, 'bold'))
 heading.configure(background='#CDCDCD', foreground='#364156')
 heading.pack()
+capture = Button(top, text="Capture Image", command=capture_image, padx=10, pady=5)
+capture.configure(background='#4285F4', foreground='white',
+                 font=('arial', 10, 'bold'))
+capture.pack(side=BOTTOM, pady=50)
 top.mainloop()
